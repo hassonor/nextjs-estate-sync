@@ -1,3 +1,92 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom Global Styles for Dark Mode */
+:root {
+    --background-color: #121212;
+    --text-color: #e0e0e0;
+    --muted-text-color: #b0b0b0;
+    --primary-color: #bb86fc;
+    --secondary-color: #03dac6;
+    --border-color: #272727;
+    --hover-bg-color: #333333;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+/* Custom classes for global dark mode styling */
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--secondary-color);
+}
+
+button {
+    background-color: var(--hover-bg-color);
+    color: var(--text-color);
+}
+
+button:hover {
+    background-color: var(--primary-color);
+    color: #000;
+}
+
+input, textarea {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+}
+
+input::placeholder, textarea::placeholder {
+    color: var(--muted-text-color);
+}
+
+hr {
+    border-color: var(--border-color);
+}
+
+.navbar {
+    background-color: var(--background-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.navbar a {
+    color: var(--text-color);
+}
+
+.navbar a:hover {
+    background-color: var(--hover-bg-color);
+    color: var(--primary-color);
+}
+
+/* Utility classes */
+.bg-dark {
+    background-color: var(--background-color);
+}
+
+.text-light {
+    color: var(--text-color);
+}
+
+.border-dark {
+    border-color: var(--border-color);
+}
+
+.bg-hover-dark:hover {
+    background-color: var(--hover-bg-color);
+}
+
+.text-primary {
+    color: var(--primary-color);
+}
+
+.text-muted {
+    color: var(--muted-text-color);
+}
