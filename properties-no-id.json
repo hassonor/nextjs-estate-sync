@@ -1,14 +1,14 @@
 [
   {
     "owner": "1",
-    "name": "Boston Commons Retreat",
+    "name": "Tel Aviv Beach Retreat",
     "type": "Apartment",
-    "description": "This is a beautiful apartment located near the commons. It is a 2 bedroom apartment with a full kitchen and bathroom. It is available for weekly or monthly rentals.",
+    "description": "This is a beautiful apartment located near the beach. It is a 2 bedroom apartment with a full kitchen and bathroom. It is available for weekly or monthly rentals.",
     "location": {
-      "street": "120 Tremont Street",
-      "city": "Boston",
-      "state": "MA",
-      "zipcode": "02108"
+      "street": "120 Hayarkon Street",
+      "city": "Tel Aviv",
+      "state": "TA",
+      "zipcode": "63453"
     },
     "beds": 2,
     "baths": 1,
@@ -30,13 +30,13 @@
       "Coffee Maker"
     ],
     "rates": {
-      "weekly": 1100,
-      "monthly": 4200
+      "weekly": 4000,
+      "monthly": 15000
     },
     "seller_info": {
       "name": "John Doe",
       "email": "john@gmail.com",
-      "phone": "617-555-5555"
+      "phone": "03-555-5555"
     },
     "images": [
       "a1.jpg",
@@ -49,14 +49,14 @@
   },
   {
     "owner": "1",
-    "name": "Cozy Downtown Loft",
+    "name": "Cozy Jerusalem Loft",
     "type": "Apartment",
-    "description": "A cozy downtown loft with great city views.",
+    "description": "A cozy loft with great city views.",
     "location": {
-      "street": "45 Main Street",
-      "city": "New York",
-      "state": "NY",
-      "zipcode": "10001"
+      "street": "45 King George Street",
+      "city": "Jerusalem",
+      "state": "JM",
+      "zipcode": "91000"
     },
     "beds": 1,
     "baths": 1,
@@ -77,13 +77,13 @@
       "Outdoor Grill/BBQ"
     ],
     "rates": {
-      "weekly": 1000,
-      "monthly": 4000
+      "weekly": 3500,
+      "monthly": 12000
     },
     "seller_info": {
       "name": "Jane Smith",
       "email": "jane@gmail.com",
-      "phone": "212-555-5555"
+      "phone": "02-555-5555"
     },
     "images": [
       "b1.jpg",
@@ -100,10 +100,10 @@
     "type": "Condo",
     "description": "Experience luxury in this stunning condo with breathtaking views.",
     "location": {
-      "street": "500 Lux Lane",
-      "city": "Los Angeles",
-      "state": "CA",
-      "zipcode": "90001"
+      "street": "500 Rothschild Boulevard",
+      "city": "Tel Aviv",
+      "state": "TA",
+      "zipcode": "66881"
     },
     "beds": 3,
     "baths": 2,
@@ -125,14 +125,14 @@
       "Coffee Maker"
     ],
     "rates": {
-      "nightly": 200,
-      "weekly": 750,
-      "monthly": 3300
+      "nightly": 750,
+      "weekly": 5000,
+      "monthly": 18000
     },
     "seller_info": {
       "name": "David Johnson",
       "email": "david@gmail.com",
-      "phone": "213-555-5555"
+      "phone": "03-555-5555"
     },
     "images": [
       "c1.jpg",
@@ -145,14 +145,14 @@
   },
   {
     "owner": "2",
-    "name": "Charming Cottage Getaway",
+    "name": "Charming Galilee Getaway",
     "type": "Cottage Or Cabin",
     "description": "Escape to this charming cottage for a peaceful retreat.",
     "location": {
-      "street": "123 Countryside Lane",
-      "city": "Austin",
-      "state": "TX",
-      "zipcode": "78701"
+      "street": "123 Kibbutz Road",
+      "city": "Tiberias",
+      "state": "TA",
+      "zipcode": "14200"
     },
     "beds": 1,
     "baths": 1,
@@ -164,12 +164,12 @@
       "Coffee Maker"
     ],
     "rates": {
-      "weekly": 2000
+      "weekly": 5000
     },
     "seller_info": {
       "name": "Emily Davis",
       "email": "emily@gmail.com",
-      "phone": "512-555-5555"
+      "phone": "04-555-5555"
     },
     "images": [
       "d1.jpg",
@@ -182,14 +182,14 @@
   },
   {
     "owner": "3",
-    "name": "Modern Downtown Studio",
+    "name": "Modern Haifa Studio",
     "type": "Studio",
-    "description": "Stay in style in this modern downtown studio apartment.",
+    "description": "Stay in style in this modern studio apartment.",
     "location": {
-      "street": "75 Urban Avenue",
-      "city": "Chicago",
-      "state": "IL",
-      "zipcode": "60601"
+      "street": "75 Ben Gurion Boulevard",
+      "city": "Haifa",
+      "state": "HA",
+      "zipcode": "33032"
     },
     "beds": 1,
     "baths": 1,
@@ -202,13 +202,13 @@
       "Outdoor Grill/BBQ"
     ],
     "rates": {
-      "weekly": 1100,
-      "monthly": 4200
+      "weekly": 4000,
+      "monthly": 15000
     },
     "seller_info": {
       "name": "Michael Brown",
       "email": "michael@gmail.com",
-      "phone": "312-555-5555"
+      "phone": "04-555-5555"
     },
     "images": [
       "e1.jpg",
@@ -221,14 +221,14 @@
   },
   {
     "owner": "3",
-    "name": "Seaside Retreat",
+    "name": "Eilat Seaside Retreat",
     "type": "House",
     "description": "Escape to this seaside house for a relaxing getaway.",
     "location": {
-      "street": "456 Oceanfront Drive",
-      "city": "Miami",
-      "state": "FL",
-      "zipcode": "33101"
+      "street": "456 Coral Beach",
+      "city": "Eilat",
+      "state": "ST",
+      "zipcode": "88000"
     },
     "beds": 4,
     "baths": 3,
@@ -247,7 +247,7 @@
     "seller_info": {
       "name": "Sarah Wilson",
       "email": "sarah@gmail.com",
-      "phone": "305-555-5555"
+      "phone": "08-555-5555"
     },
     "images": [
       "f1.jpg",
@@ -260,14 +260,14 @@
   },
   {
     "owner": "4",
-    "name": "Rustic Cabin in the Woods",
+    "name": "Rustic Cabin in the Carmel",
     "type": "Cottage Or Cabin",
     "description": "Experience nature in this cozy rustic cabin.",
     "location": {
-      "street": "789 Forest Lane",
-      "city": "Denver",
-      "state": "CO",
-      "zipcode": "80201"
+      "street": "789 Carmel Forest Lane",
+      "city": "Haifa",
+      "state": "HA",
+      "zipcode": "35000"
     },
     "beds": 2,
     "baths": 1,
@@ -285,7 +285,7 @@
     "seller_info": {
       "name": "Robert Anderson",
       "email": "robert@gmail.com",
-      "phone": "303-555-5555"
+      "phone": "04-555-5555"
     },
     "images": [
       "g1.jpg",
@@ -302,10 +302,10 @@
     "type": "Chalet",
     "description": "Hit the slopes from this cozy ski-in/ski-out chalet.",
     "location": {
-      "street": "321 Mountain Road",
-      "city": "Aspen",
-      "state": "CO",
-      "zipcode": "81611"
+      "street": "321 Hermon Road",
+      "city": "Golan Heights",
+      "state": "GO",
+      "zipcode": "12400"
     },
     "beds": 3,
     "baths": 2,
@@ -323,7 +323,7 @@
     "seller_info": {
       "name": "Jennifer Martin",
       "email": "jennifer@gmail.com",
-      "phone": "970-555-5555"
+      "phone": "04-555-5555"
     },
     "images": [
       "h1.jpg",
@@ -340,10 +340,10 @@
     "type": "House",
     "description": "Enjoy stunning mountain views from this spacious retreat.",
     "location": {
-      "street": "600 Summit Drive",
-      "city": "Boulder",
-      "state": "CO",
-      "zipcode": "80301"
+      "street": "600 Ramot Naftali Road",
+      "city": "Ramot Naftali",
+      "state": "TZ",
+      "zipcode": "13830"
     },
     "beds": 4,
     "baths": 3,
@@ -362,7 +362,7 @@
     "seller_info": {
       "name": "Lisa Taylor",
       "email": "lisa@gmail.com",
-      "phone": "303-555-5555"
+      "phone": "04-555-5555"
     },
     "images": [
       "i1.jpg",
@@ -379,10 +379,10 @@
     "type": "Apartment",
     "description": "Step back in time with a stay in this historic downtown loft.",
     "location": {
-      "street": "123 History Lane",
-      "city": "Philadelphia",
-      "state": "PA",
-      "zipcode": "19101"
+      "street": "123 Rothschild Boulevard",
+      "city": "Tel Aviv",
+      "state": "TA",
+      "zipcode": "66881"
     },
     "beds": 2,
     "baths": 1,
@@ -400,7 +400,7 @@
     "seller_info": {
       "name": "Matthew Harris",
       "email": "matthew@gmail.com",
-      "phone": "215-555-5555"
+      "phone": "03-555-5555"
     },
     "images": [
       "j1.jpg",
