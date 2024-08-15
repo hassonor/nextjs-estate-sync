@@ -78,4 +78,4 @@ PropertySchema.statics.build = function (attrs: Omit<IProperty, '_id' | 'created
 // Define the Property model with the static method
 const Property = models.Property || model<PropertyDoc, PropertyModel>('Property', PropertySchema);
 
-export {Property};
+export default Property;

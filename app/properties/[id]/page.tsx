@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import PropertyHeaderImage from "@/components/PropertyHeaderImage";
 import connectDB from '@/config/database';
 import {IProperty} from '@/interfaces/property.interface';
-import {Property} from '@/models/Property';
+import Property from '@/models/Property';
 import Link from "next/link";
 import {FaArrowLeft} from "react-icons/fa";
 import PropertyDetails from "@/components/PropertyDetails";

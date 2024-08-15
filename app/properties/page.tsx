@@ -1,5 +1,5 @@
 import connectDB from '@/config/database';
-import {Property} from '@/models/Property';
+import Property from '@/models/Property';
 import PropertyCard from "@/components/PropertyCard";
 import {IProperty} from "@/interfaces/property.interface";
 

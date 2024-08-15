@@ -2,7 +2,7 @@ import PropertyCard from './PropertyCard';
 import Link from "next/link";
 import connectDB from "@/config/database";
 import {IProperty} from "@/interfaces/property.interface";
-import {Property} from "@/models/Property";
+import Property from "@/models/Property";
 
 const HomeProperties = async () => {
     await connectDB();
