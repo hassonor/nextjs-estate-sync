@@ -1,4 +1,4 @@
-const AddPropertyPage = () => {
+const AddPropertyPage = async () => {
     return (<div>AddProperty Page</div>)
 }
 
