@@ -1,101 +1,81 @@
-import {model, models, Schema, Document, Model} from 'mongoose';
+import {Schema, model, models, Model, Types} from 'mongoose';
+import {IProperty, PropertyDoc} from "@/interfaces/property.interface";
 
-// Define the interface for the Property document
-interface IProperty extends Document {
-    owner: Schema.Types.ObjectId;
-    name: string;
-    type: string;
-    description?: string;
-    location?: {
-        street?: string;
-        city?: string;
-        state?: string;
-        zipcode?: string;
-    };
-    beds: number;
-    bath: number;
-    square_feet: number;
-    amenities?: string[];
-    rates?: {
-        nightly?: number;
-        weekly?: number;
-        monthly?: number;
-    };
-    seller_info?: {
-        name?: string;
-        email?: string;
-        phone?: string;
-    };
-    images?: string[];
-    is_featured?: boolean;
-    createdAt: Date;
-    updatedAt: Date;
+// Define the properties that a Property Model has
+interface PropertyModel extends Model<PropertyDoc> {
+    build(attrs: Omit<IProperty, '_id' | 'createdAt' | 'updatedAt'>): PropertyDoc;
 }
 
-const PropertySchema = new Schema<IProperty>(
+const PropertySchema = new Schema<PropertyDoc>(
     {
         owner: {
             type: Schema.Types.ObjectId,
             ref: 'User',
-            required: true
+            required: true,
         },
         name: {
             type: String,
-            required: true
+            required: true,
         },
         type: {
             type: String,
-            required: true
+            required: true,
         },
         description: {
             type: String,
         },
         location: {
-            street: String,
-            city: String,
-            state: String,
-            zipcode: String
+            street: {type: String},
+            city: {type: String},
+            state: {type: String},
+            zipcode: {type: String},
         },
         beds: {
             type: Number,
-            required: true
+            required: true,
         },
         bath: {
             type: Number,
-            required: true
+            required: true,
         },
         square_feet: {
             type: Number,
-            required: true
+            required: true,
         },
         amenities: [
-            {type: String}
+            {type: String},
         ],
         rates: {
             nightly: Number,
             weekly: Number,
-            monthly: Number
+            monthly: Number,
         },
         seller_info: {
             name: String,
             email: String,
-            phone: String
+            phone: String,
         },
         images: [
             {
-                type: String
-            }
+                type: String,
+            },
         ],
         is_featured: {
             type: Boolean,
-            default: false
-        }
+            default: false,
+        },
     },
     {
-        timestamps: true
+        timestamps: true,
     }
 );
 
-const Property: Model<IProperty> = models.Property || model<IProperty>('Property', PropertySchema);
+// Static build method to create a new Property
+PropertySchema.statics.build = function (attrs: Omit<IProperty, '_id' | 'createdAt' | 'updatedAt'>) {
+    return new this(attrs);
+};
 
-export default Property;
+// Define the Property model with the static method
+const Property = models.Property || model<PropertyDoc, PropertyModel>('Property', PropertySchema);
+
+export {Property};

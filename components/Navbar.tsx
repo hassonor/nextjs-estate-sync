@@ -81,7 +81,7 @@ const Navbar = () => {
                                       } block rounded-md px-3 py-2`}>
                                     Home
                                 </Link>
-                                <Link href="/properties"
+                                <Link href="/_theme_files/properties"
                                       className={`${
                                           pathname === '/properties' ? 'bg-gray-700 text-white font-bold border-b-2 border-red-500' : 'text-gray-300 hover:bg-gray-800 hover:text-white'
                                       } block rounded-md px-3 py-2`}>
@@ -202,7 +202,7 @@ const Navbar = () => {
                             Home
                         </Link>
                         <Link
-                            href='/properties'
+                            href='/_theme_files/properties'
                             className={`${
                                 pathname === '/properties' ? 'bg-gray-700 text-white font-bold border-b-2 border-red-500' : 'text-gray-300 hover:bg-gray-800 hover:text-white'
                             } block rounded-md px-3 py-2 text-base font-medium`}>

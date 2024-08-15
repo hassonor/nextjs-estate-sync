@@ -1,7 +1,12 @@
-import properties from '@/properties.json';
+import connectDB from '@/config/database';
+import {Property} from '@/models/Property';
 import PropertyCard from "@/components/PropertyCard";
+import {IProperty} from "@/interfaces/property.interface";
 
-const PropertiesPage = () => {
+
+const PropertiesPage = async () => {
+    await connectDB();
+    const properties: IProperty[] = await Property.find({}).lean();
 
     return (
         <section className='px-4 py-6'>
@@ -9,7 +14,7 @@ const PropertiesPage = () => {
                 {properties.length === 0 ? (<p>No properties found</p>) : (
                     <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
                         {
-                            properties.map((property, index) => (
+                            properties.map((property: IProperty) => (
                                 <PropertyCard key={property._id} property={property}/>
                             ))
                         }
@@ -17,7 +22,6 @@ const PropertiesPage = () => {
                 )}
             </div>
         </section>
-
     )
 }
 

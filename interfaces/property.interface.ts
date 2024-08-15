@@ -1,3 +1,5 @@
+import {Document, Types} from "mongoose";
+
 interface Location {
     street: string;
     city: string;
@@ -17,7 +19,7 @@ interface SellerInfo {
     phone: string;
 }
 
-export interface Property {
+export interface IProperty {
     _id?: string;
     owner: string;
     name: string;
@@ -35,3 +37,24 @@ export interface Property {
     createdAt: string;
     updatedAt: string;
 }
+
+export interface PropertyDoc extends Document {
+    _id?: string;
+    owner: Types.ObjectId;
+    name: string;
+    type: string;
+    description?: string;
+    location?: Location;
+    beds: number;
+    bath: number;
+    square_feet: number;
+    amenities?: string[];
+    rates?: Rates;
+    seller_info?: SellerInfo;
+    images?: string[];
+    is_featured?: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+
