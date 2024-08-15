@@ -6,13 +6,27 @@ import Image from 'next/image';
 import {FaGoogle} from "react-icons/fa";
 import logo from '@/assets/images/logo-white.png';
 import profileDefault from '@/assets/images/profile.png';
+import {signIn, signOut, useSession, getProviders, ClientSafeProvider} from "next-auth/react";
+import {sign} from "node:crypto";
 
 const Navbar = () => {
+    const {data: session} = useSession();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [providers, setProviders] = useState<Record<string, ClientSafeProvider> | null>(null);
+
 
     const pathname = usePathname();
+
+    useEffect(() => {
+        const setAuthProviders = async () => {
+            const res = await getProviders();
+            setProviders(res);
+        }
+
+        setAuthProviders();
+    }, [])
+
 
     useEffect(() => {
         const handleResize = () => {
@@ -87,7 +101,7 @@ const Navbar = () => {
                                       } block rounded-md px-3 py-2`}>
                                     Properties
                                 </Link>
-                                {isLoggedIn &&
+                                {session &&
                                     (<Link href="/properties/add"
                                            className={`${
                                                pathname === '/properties/add' ? 'bg-gray-700 text-white font-bold border-b-2 border-red-500' : 'text-gray-300 hover:bg-gray-800 hover:text-white'
@@ -97,20 +111,20 @@ const Navbar = () => {
                             </div>
                         </div>
                     </div>
-
-                    {/* Right Side Menu (Logged Out) */}
-                    {!isLoggedIn && (<div className="hidden md:block md:ml-6">
+                    {!session && (<div className="hidden md:block md:ml-6">
                         <div className="flex items-center">
-                            <button
-                                className="flex items-center text-gray-300 bg-gray-800 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2">
-                                <FaGoogle className="text-white mr-2"/>
-                                <span>Login or Register</span>
-                            </button>
+                            {providers && Object.values(providers).map((provider, index) => (
+                                <button
+                                    key={index}
+                                    onClick={() => signIn(provider.id)}
+                                    className="flex items-center text-gray-300 bg-gray-800 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2">
+                                    <FaGoogle className="text-white mr-2"/>
+                                    <span>Login or Register</span>
+                                </button>
+                            ))}
                         </div>
                     </div>)}
-
-                    {/* Right Side Menu (Logged In) */}
-                    {isLoggedIn && (<div
+                    {session && (<div
                         className="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0">
                         <Link href="/messages" className="relative group">
                             <button
@@ -208,7 +222,7 @@ const Navbar = () => {
                             } block rounded-md px-3 py-2 text-base font-medium`}>
                             Properties
                         </Link>
-                        {isLoggedIn && (
+                        {session && (
                             <Link
                                 href='/properties/add'
                                 className={`${
@@ -216,7 +230,7 @@ const Navbar = () => {
                                 } block rounded-md px-3 py-2 text-base font-medium`}>
                                 Add Property
                             </Link>)}
-                        {!isLoggedIn && (<button
+                        {!session && (<button
                             className="flex items-center text-gray-300 bg-gray-800 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 my-5"
                         >
                             <i className="fa-brands fa-google mr-2"></i>

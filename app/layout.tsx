@@ -2,6 +2,7 @@ import '@/assets/styles/global.css';
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import {ReactNode} from 'react';
+import AuthProvider from "@/components/AuthProvider";
 
 export const metadata = {
     title: 'Estate Sync',
@@ -11,15 +12,17 @@ export const metadata = {
 
 const MainLayout = ({children}: { children: ReactNode }) => {
     return (
-        <html lang="en">
-        <body>
-        <main>
-            <Navbar/>
-            {children}
-        </main>
-        <Footer/>
-        </body>
-        </html>
+        <AuthProvider>
+            <html lang="en">
+            <body>
+            <main>
+                <Navbar/>
+                {children}
+            </main>
+            <Footer/>
+            </body>
+            </html>
+        </AuthProvider>
     );
 };
 
