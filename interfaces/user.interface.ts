@@ -3,7 +3,7 @@ import mongoose, {Types} from "mongoose";
 export interface IUser {
     email: string;
     username: string;
-    image?: string;
+    image: string;
     bookmarks?: Types.ObjectId[];
 }
 

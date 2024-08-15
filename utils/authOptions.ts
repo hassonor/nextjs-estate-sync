@@ -5,6 +5,10 @@ import connectDB from "@/config/database";
 import User from "@/models/User";
 import {UserDoc} from "@/interfaces/user.interface";
 
+interface ExtendedProfile extends Profile {
+    picture?: string;
+}
+
 // Define the authOptions with proper types
 export const authOptions: AuthOptions = {
     providers: [
@@ -21,10 +25,9 @@ export const authOptions: AuthOptions = {
         })
     ],
     callbacks: {
-        async signIn({profile}: { profile?: Profile }) {
+        async signIn({profile}: { profile?: ExtendedProfile }) {
             await connectDB();
             const userExists = await User.findOne({email: profile!.email})
-            console.log('userExists?', userExists);
             if (!userExists) {
                 // Truncate username if too long
                 const username = profile?.name!.slice(0, 20);
@@ -32,7 +35,7 @@ export const authOptions: AuthOptions = {
                 await User.create({
                     email: profile!.email,
                     username,
-                    image: profile?.image
+                    image: profile?.picture!
                 })
             }
             return true;
