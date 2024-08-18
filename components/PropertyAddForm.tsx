@@ -48,7 +48,7 @@ const PropertyAddForm = () => {
                     id='description'
                     name='description'
                     className='border rounded w-full py-2 px-3'
-                    rows='4'
+                    rows={4}
                     placeholder='Add an optional description of your property'
                 ></textarea>
             </div>

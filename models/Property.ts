@@ -34,7 +34,7 @@ const PropertySchema = new Schema<PropertyDoc>(
             type: Number,
             required: true,
         },
-        bath: {
+        baths: {
             type: Number,
             required: true,
         },

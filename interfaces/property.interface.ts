@@ -46,7 +46,7 @@ export interface PropertyDoc extends Document {
     description?: string;
     location?: Location;
     beds: number;
-    bath: number;
+    baths: number;
     square_feet: number;
     amenities?: string[];
     rates?: Rates;
