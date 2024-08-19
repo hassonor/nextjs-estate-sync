@@ -1,10 +1,10 @@
 'use client';
 
-import {useState} from 'react';
+import {FC, useState} from 'react';
 import {IProperty} from "@/interfaces/property.interface";
 import Link from "next/link";
 import Image from "next/image";
-import {FC} from "react";
+import deleteProperty from "@/app/actions/deleteProperty";
 
 interface ProfilePropertiesProps {
     initialProperties: IProperty[];
@@ -12,6 +12,17 @@ interface ProfilePropertiesProps {
 
 const ProfileProperties: FC<ProfilePropertiesProps> = ({initialProperties}) => {
     const [properties, setProperties] = useState(initialProperties);
+
+    const handleDelete = async (propertyId: string) => {
+
+        const confirmed = window.confirm('Are you sure you want to delete this property?')
+        if (!confirmed) return;
+
+        await deleteProperty(propertyId);
+
+        const updatedProperties = properties.filter((property) => property._id !== propertyId);
+        setProperties(updatedProperties);
+    };
 
     return (
         <div>
@@ -50,11 +61,6 @@ const ProfileProperties: FC<ProfilePropertiesProps> = ({initialProperties}) => {
             ))}
         </div>
     );
-};
-
-const handleDelete = (propertyId: string) => {
-    // Add logic to delete the property
-    console.log("Deleting property with ID:", propertyId);
 };
 
 export default ProfileProperties;
