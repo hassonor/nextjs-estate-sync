@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import {FaBed, FaBath, FaRulerCombined, FaMoneyBill, FaMapMarker} from "react-icons/fa";
-import {Property} from "@/interfaces/property.interface";
+import {IProperty} from "@/interfaces/property.interface";
 
 interface PropertyCardProps {
-    property: Property
+    property: IProperty
 }
 
 const PropertyCard = ({property}: PropertyCardProps) => {
@@ -21,7 +21,7 @@ const PropertyCard = ({property}: PropertyCardProps) => {
     return (
         <div className="rounded-xl shadow-md relative">
             <Image
-                src={`/images/properties/${property.images[0]}`}
+                src={property.images[0]}
                 alt={property.name}
                 width='0'
                 height='0'
