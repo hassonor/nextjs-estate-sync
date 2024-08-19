@@ -17,7 +17,7 @@ const ProfileProperties: FC<ProfilePropertiesProps> = ({initialProperties}) => {
         <div>
             {properties.map((property, index) => (
                 <div key={property._id} className="mb-10">
-                    <Link href={`/property/${property._id}`}>
+                    <Link href={`/properties/${property._id}`}>
                         <Image
                             className="h-32 w-full rounded-md object-cover"
                             src={property.images[0]}
