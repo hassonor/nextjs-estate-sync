@@ -2,6 +2,8 @@ import '@/assets/styles/global.css';
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import {ReactNode} from 'react';
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import AuthProvider from "@/components/AuthProvider";
 
 export const metadata = {
@@ -20,6 +22,7 @@ const MainLayout = ({children}: { children: ReactNode }) => {
                 {children}
             </main>
             <Footer/>
+            <ToastContainer/>
             </body>
             </html>
         </AuthProvider>

@@ -5,6 +5,7 @@ import {IProperty} from "@/interfaces/property.interface";
 import Link from "next/link";
 import Image from "next/image";
 import deleteProperty from "@/app/actions/deleteProperty";
+import {toast} from "react-toastify";
 
 interface ProfilePropertiesProps {
     initialProperties: IProperty[];
@@ -22,6 +23,8 @@ const ProfileProperties: FC<ProfilePropertiesProps> = ({initialProperties}) => {
 
         const updatedProperties = properties.filter((property) => property._id !== propertyId);
         setProperties(updatedProperties);
+
+        toast.success('Property Deleted Successfully!');
     };
 
     return (
