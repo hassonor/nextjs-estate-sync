@@ -3,15 +3,15 @@ import connectDB from '@/config/database';
 import Property from "@/models/Property";
 import {getSessionUser} from "@/utils/getSessionUser";
 import {revalidatePath} from "next/cache";
-import {redirect} from "next/navigation";
 import cloudinary from "@/config/cloudinary";
+import {redirect} from "next/navigation";
 
 interface PropertyFormData {
     getAll: (field: string) => FormDataEntryValue[];
     get: (field: string) => FormDataEntryValue | null;
 }
 
-async function updateProperty(propertyId: string, formData: PropertyFormData) {
+export async function updateProperty(propertyId: string, formData: PropertyFormData) {
     await connectDB();
     const sessionUser = await getSessionUser();
 
@@ -20,65 +20,88 @@ async function updateProperty(propertyId: string, formData: PropertyFormData) {
     }
 
     const {userId} = sessionUser;
+    const property = await Property.findById(propertyId);
 
-    // Access all values from amenities and images
-    const amenities = formData.getAll('amenities') as string[];
-    // const images = formData.getAll('images') as File[];
+    if (!property) {
+        throw new Error('Property Not Found');
+    }
 
-    const propertyData: any = {
-        owner: userId,
-        type: formData.get('type') as string | null,
-        name: formData.get('name') as string | null,
-        description: formData.get('description') as string | null,
-        location: {
-            street: formData.get('location.street') as string | null,
-            city: formData.get('location.city') as string | null,
-            state: formData.get('location.state') as string | null,
-            zipcode: formData.get('location.zipcode') as string | null,
-        },
-        beds: formData.get('beds') as string | null,
-        baths: formData.get('baths') as string | null,
-        square_feet: formData.get('square_feet') as string | null,
-        amenities,
-        rates: {
-            nightly: formData.get('rates.nightly') as string | null,
-            weekly: formData.get('rates.weekly') as string | null,
-            monthly: formData.get('rates.monthly') as string | null,
-        },
-        seller_info: {
-            name: formData.get('seller_info.name') as string | null,
-            email: formData.get('seller_info.email') as string | null,
-            phone: formData.get('seller_info.phone') as string | null,
-        },
+    // Verify ownership
+    if (property.owner.toString() !== userId) {
+        throw new Error('Unauthorized');
+    }
+
+    // Handle images to remove
+    const imagesToRemove: string[] = formData.getAll('imagesToRemove') as string[];
+
+    if (imagesToRemove.length > 0) {
+        const publicIds = imagesToRemove.map((imageUrl) => {
+            const parts = imageUrl.split('/');
+            const fileName = parts[parts.length - 1];
+            return fileName.split('.')[0];
+        });
+
+        await Promise.all(
+            publicIds.map((publicId) => cloudinary.uploader.destroy(`estatesync/${publicId}`))
+        );
+
+        property.images = property.images.filter((image: any) => !imagesToRemove.includes(image));
+    }
+
+    // Handle new image uploads
+    const newImages = formData.getAll('newImages') as File[];
+    const uploadedImageUrls: string[] = [];
+
+    if (newImages.length > 0) {
+        for (const imageFile of newImages) {
+            if (imageFile instanceof File && imageFile.size > 0) {
+                // Read the file as Base64
+                const arrayBuffer = await imageFile.arrayBuffer();
+                const base64String = Buffer.from(arrayBuffer).toString('base64');
+
+                // Upload to Cloudinary
+                const result = await cloudinary.uploader.upload(
+                    `data:${imageFile.type};base64,${base64String}`,
+                    {folder: 'estatesync'}
+                );
+                uploadedImageUrls.push(result.secure_url);
+            }
+        }
+
+        // Add the uploaded images to the existing images
+        property.images = [...property.images, ...uploadedImageUrls];
+    }
+
+    // Update property details
+    property.type = formData.get('type') as string;
+    property.name = formData.get('name') as string;
+    property.description = formData.get('description') as string;
+    property.location = {
+        street: formData.get('location.street') as string,
+        city: formData.get('location.city') as string,
+        state: formData.get('location.state') as string,
+        zipcode: formData.get('location.zipcode') as string,
+    };
+    property.beds = Number(formData.get('beds'));
+    property.baths = Number(formData.get('baths'));
+    property.square_feet = Number(formData.get('square_feet'));
+    property.amenities = formData.getAll('amenities') as string[];
+    property.rates = {
+        nightly: Number(formData.get('rates.nightly')),
+        weekly: Number(formData.get('rates.weekly')),
+        monthly: Number(formData.get('rates.monthly')),
+    };
+    property.seller_info = {
+        name: formData.get('seller_info.name') as string,
+        email: formData.get('seller_info.email') as string,
+        phone: formData.get('seller_info.phone') as string,
     };
 
-    // // Upload images to Cloudinary and get the URLs
-    // const imageUrls: string[] = [];
-    // for (const imageFile of images) {
-    //     if (imageFile instanceof File && imageFile.name !== '') {
-    //         const imageBuffer = await imageFile.arrayBuffer();
-    //         const imageArray = Array.from(new Uint8Array(imageBuffer));
-    //         const imageData = Buffer.from(imageArray);
-    //
-    //         // Convert to base64
-    //         const imageBase64 = imageData.toString('base64');
-    //
-    //         // Upload to Cloudinary
-    //         const result = await cloudinary.uploader.upload(`data:image/png;base64,${imageBase64}`, {
-    //             folder: 'EstateSync',
-    //         });
-    //
-    //         imageUrls.push(result.secure_url);
-    //     }
-    // }
-    //
-    // propertyData.images = imageUrls;
+    await property.save();
 
-    const updateProperty = await Property.findByIdAndUpdate(propertyId, propertyData);
-
-    // Revalidate the cache and redirect
-    revalidatePath('/', 'layout');
-    redirect(`/properties/${updateProperty._id}`);
+    // Revalidate cache and redirect
+    revalidatePath('/');
+    redirect(`/properties/${property._id}`);
 }
 
 export default updateProperty;
