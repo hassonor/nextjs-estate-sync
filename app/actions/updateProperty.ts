@@ -1,19 +1,17 @@
 'use server';
-
+import connectDB from '@/config/database';
 import Property from "@/models/Property";
+import {getSessionUser} from "@/utils/getSessionUser";
 import {revalidatePath} from "next/cache";
 import {redirect} from "next/navigation";
-import connectDB from "@/config/database";
-import {getSessionUser} from "@/utils/getSessionUser";
 import cloudinary from "@/config/cloudinary";
-
 
 interface PropertyFormData {
     getAll: (field: string) => FormDataEntryValue[];
     get: (field: string) => FormDataEntryValue | null;
 }
 
-async function addProperty(formData: PropertyFormData) {
+async function updateProperty(propertyId: string, formData: PropertyFormData) {
     await connectDB();
     const sessionUser = await getSessionUser();
 
@@ -25,7 +23,7 @@ async function addProperty(formData: PropertyFormData) {
 
     // Access all values from amenities and images
     const amenities = formData.getAll('amenities') as string[];
-    const images = formData.getAll('images') as File[];
+    // const images = formData.getAll('images') as File[];
 
     const propertyData: any = {
         owner: userId,
@@ -52,37 +50,35 @@ async function addProperty(formData: PropertyFormData) {
             email: formData.get('seller_info.email') as string | null,
             phone: formData.get('seller_info.phone') as string | null,
         },
-        images: [] as string[], // Initialize as an empty array for the image URLs
     };
 
-    // Upload images to Cloudinary and get the URLs
-    const imageUrls: string[] = [];
-    for (const imageFile of images) {
-        if (imageFile instanceof File && imageFile.name !== '') {
-            const imageBuffer = await imageFile.arrayBuffer();
-            const imageArray = Array.from(new Uint8Array(imageBuffer));
-            const imageData = Buffer.from(imageArray);
+    // // Upload images to Cloudinary and get the URLs
+    // const imageUrls: string[] = [];
+    // for (const imageFile of images) {
+    //     if (imageFile instanceof File && imageFile.name !== '') {
+    //         const imageBuffer = await imageFile.arrayBuffer();
+    //         const imageArray = Array.from(new Uint8Array(imageBuffer));
+    //         const imageData = Buffer.from(imageArray);
+    //
+    //         // Convert to base64
+    //         const imageBase64 = imageData.toString('base64');
+    //
+    //         // Upload to Cloudinary
+    //         const result = await cloudinary.uploader.upload(`data:image/png;base64,${imageBase64}`, {
+    //             folder: 'EstateSync',
+    //         });
+    //
+    //         imageUrls.push(result.secure_url);
+    //     }
+    // }
+    //
+    // propertyData.images = imageUrls;
 
-            // Convert to base64
-            const imageBase64 = imageData.toString('base64');
-
-            // Upload to Cloudinary
-            const result = await cloudinary.uploader.upload(`data:image/png;base64,${imageBase64}`, {
-                folder: 'EstateSync',
-            });
-
-            imageUrls.push(result.secure_url);
-        }
-    }
-
-    propertyData.images = imageUrls;
-
-    const newProperty = new Property(propertyData);
-    await newProperty.save();
+    const updateProperty = await Property.findByIdAndUpdate(propertyId, propertyData);
 
     // Revalidate the cache and redirect
-    revalidatePath('/');
-    redirect(`/properties/${newProperty._id}`);
+    revalidatePath('/', 'layout');
+    redirect(`/properties/${updateProperty._id}`);
 }
 
-export default addProperty;
+export default updateProperty;

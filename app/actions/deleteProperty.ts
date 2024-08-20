@@ -6,6 +6,7 @@ import {getSessionUser} from "@/utils/getSessionUser";
 import {revalidatePath} from "next/cache";
 
 async function deleteProperty(propertyId: string) {
+    await connectDB();
     const sessionUser = await getSessionUser();
 
     if (!sessionUser || !sessionUser.userId) {
@@ -16,7 +17,7 @@ async function deleteProperty(propertyId: string) {
 
     const property = await Property.findById(propertyId);
     if (!property) throw new Error('Property Not Found');
-    
+
     // Verify ownership
     if (property.owner.toString() !== userId) {
         throw new Error('Unauthorized');
