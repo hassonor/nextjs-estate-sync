@@ -12,7 +12,11 @@ export const metadata = {
     description: 'Find the perfect rental property',
 };
 
-const MainLayout = ({children}: { children: ReactNode }) => {
+interface MainLayoutProps {
+    children: ReactNode;
+}
+
+const MainLayout: React.FC<MainLayoutProps> = ({children}) => {
     return (
         <AuthProvider>
             <html lang="en">
