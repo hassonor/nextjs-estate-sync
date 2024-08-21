@@ -40,7 +40,7 @@ const PropertyMap: React.FC<{ property: IProperty }> = ({property}) => {
                 center={position || [viewport.latitude, viewport.longitude]}
                 zoom={viewport.zoom}
                 style={{height: viewport.height, width: viewport.width}}
-                scrollWheelZoom={false}
+                scrollWheelZoom={true}
             >
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
