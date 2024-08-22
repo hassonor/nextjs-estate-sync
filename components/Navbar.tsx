@@ -191,7 +191,7 @@ const Navbar = () => {
                                       role="menuitem" onClick={() => setIsProfileMenuOpen(false)}>
                                     Your Profile
                                 </Link>
-                                <Link href="/properties/save"
+                                <Link href="/properties/saved"
                                       className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white"
                                       role="menuitem" onClick={() => setIsProfileMenuOpen(false)}>
                                     Saved Properties
