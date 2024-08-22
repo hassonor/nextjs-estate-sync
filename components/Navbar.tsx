@@ -77,7 +77,6 @@ const Navbar = () => {
                     </div>
 
                     <div className="flex flex-1 items-center justify-center md:items-stretch md:justify-start">
-                        {/* Logo */}
                         <Link href="/" className="flex flex-shrink-0 items-center">
                             <Image
                                 className="h-10 w-auto"
