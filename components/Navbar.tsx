@@ -7,7 +7,6 @@ import {FaGoogle} from "react-icons/fa";
 import logo from '@/assets/images/logo-white.png';
 import profileDefault from '@/assets/images/profile.png';
 import {signIn, signOut, useSession, getProviders, ClientSafeProvider} from "next-auth/react";
-import {sign} from "node:crypto";
 
 const Navbar = () => {
     const {data: session} = useSession();

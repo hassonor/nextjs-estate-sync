@@ -1,8 +1,5 @@
 'use server';
 
-import Property from "@/models/Property";
-import {revalidatePath} from "next/cache";
-import {redirect} from "next/navigation";
 import connectDB from "@/config/database";
 import {getSessionUser} from "@/utils/getSessionUser";
 import Message from "@/models/Message";
@@ -13,7 +10,7 @@ interface MessageFormData {
     get: (field: string) => FormDataEntryValue | null;
 }
 
-async function addMessage(formData: MessageFormData) {
+async function addMessage(previousState: MessageFormData, formData: MessageFormData) {
     await connectDB();
     const sessionUser = await getSessionUser();
 
