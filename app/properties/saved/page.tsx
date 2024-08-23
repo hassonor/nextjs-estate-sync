@@ -1,7 +1,6 @@
 import {getSessionUser} from "@/utils/getSessionUser";
 import connectDB from "@/config/database";
 import User from "@/models/User";
-import {IUser} from "@/interfaces/user.interface";
 import PropertyCard from "@/components/PropertyCard";
 import {IProperty} from "@/interfaces/property.interface";
 
@@ -15,9 +14,8 @@ const SavedPage = async () => {
 
     const {userId} = sessionUser;
 
-    const user = await User.findById(userId).populate('bookmarks');
-    const bookmarks = user?.bookmarks as unknown as IProperty[] || [];
-
+    const {bookmarks} = await User.findById(userId).populate('bookmarks') as IProperty[];
+    
     return (
         <section className="px-4 py-6">
             <div className="container lg:container m-auto px-4 py-6">
