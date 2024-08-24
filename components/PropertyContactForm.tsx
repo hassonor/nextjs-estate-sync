@@ -15,7 +15,7 @@ interface PropertyContactFormProps {
 
 const PropertyContactForm = ({property}: PropertyContactFormProps) => {
     const {data: session} = useSession();
-    const [state, formAction] = useFormState<any>(addMessage, {});
+    const [state, formAction] = useFormState<any, any>(addMessage, {});
 
     useEffect(() => {
         if (state.error) toast.error(state.error);
