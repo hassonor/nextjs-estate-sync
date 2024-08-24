@@ -10,6 +10,7 @@ export interface IMessage {
     phone?: string;
     body?: string;
     read?: boolean;
+    createdAt?: Date;
 }
 
 
