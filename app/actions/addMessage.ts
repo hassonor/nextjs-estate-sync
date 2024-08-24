@@ -1,44 +1,32 @@
 'use server';
 
 import connectDB from "@/config/database";
-import {getSessionUser} from "@/utils/getSessionUser";
 import Message from "@/models/Message";
+import {getSessionUser} from "@/utils/getSessionUser";
+import {revalidatePath} from "next/cache";
 
-
-interface MessageFormData {
-    getAll: (field: string) => FormDataEntryValue[];
-    get: (field: string) => FormDataEntryValue | null;
-}
-
-async function addMessage(previousState: MessageFormData, formData: MessageFormData) {
+async function deleteMessage(messageId: string) {
     await connectDB();
     const sessionUser = await getSessionUser();
 
     if (!sessionUser || !sessionUser.userId) {
-        throw new Error('User ID is required');
+        throw new Error('User Id is required');
     }
 
     const {userId} = sessionUser;
 
-    const recipient = formData.get('recipient');
+    const message = await Message.findById(messageId);
+    if (!message) throw new Error('Message Not Found');
 
-    if (userId === recipient) {
-        return {error: 'You can not send a message to yourself'}
+    // Verify ownership
+    if (message.recipient.toString() !== userId) {
+        throw new Error('Unauthorized');
     }
 
-    const newMessage = new Message({
-        sender: userId,
-        recipient,
-        property: formData.get('property'),
-        name: formData.get('name'),
-        email: formData.get('email'),
-        phone: formData.get('phone'),
-        body: formData.get('body')
-    });
+    await message.deleteOne();
 
-    await newMessage.save();
+    revalidatePath('/', 'layout');
 
-    return {submitted: true};
 }
 
-export default addMessage;
+export default deleteMessage;

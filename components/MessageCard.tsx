@@ -3,15 +3,18 @@
 import React, {useState, useMemo} from 'react';
 import {toast} from 'react-toastify';
 import markMessageAsRead from '@/app/actions/markMessageAsRead';
+
 import {IMessage} from "@/interfaces/message.interface";
+import deleteMessage from "@/app/actions/addMessage";
 
 interface MessageCardProps {
     message: IMessage;
 }
 
 const MessageCard: React.FC<MessageCardProps> = React.memo(({message}) => {
-    const [isRead, setIsRead] = useState(message.read);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isRead, setIsRead] = useState<boolean>(message.read || false);
+    const [isDeleted, setIsDeleted] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     // Memoizing the formatted date to avoid recalculating it on each render
     const formattedDate = useMemo(() => {
@@ -38,6 +41,27 @@ const MessageCard: React.FC<MessageCardProps> = React.memo(({message}) => {
             setIsLoading(false);
         }
     };
+
+    if (isDeleted) {
+        return <p>Deleted message</p>
+    }
+
+    const handleDeleteClick = async () => {
+        setIsLoading(true);
+        try {
+            await deleteMessage(message._id!);
+            setIsDeleted(true);
+            toast.success('Message Deleted');
+        } catch (error) {
+            toast.error('An error occurred while deleting the message.');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    if (isDeleted) {
+        return null; // Return nothing if the message has been deleted
+    }
 
     return (
         <div className='relative bg-white p-4 rounded-md shadow-md border border-gray-200 transition-all'>
@@ -71,15 +95,24 @@ const MessageCard: React.FC<MessageCardProps> = React.memo(({message}) => {
                 </li>
             </ul>
 
-            <button
-                onClick={handleReadClick}
-                disabled={isLoading}
-                className={`mt-4 mr-3 py-1 px-3 rounded-md transition-all ${
-                    isRead ? 'bg-gray-300 text-gray-600' : 'bg-blue-500 text-white'
-                } ${isLoading && 'cursor-not-allowed opacity-75'}`}
-            >
-                {isLoading ? 'Processing...' : isRead ? 'Mark As New' : 'Mark As Read'}
-            </button>
+            <div className="mt-4 flex space-x-3">
+                <button
+                    onClick={handleReadClick}
+                    disabled={isLoading}
+                    className={`py-1 px-3 rounded-md transition-all ${
+                        isRead ? 'bg-gray-300 text-gray-600' : 'bg-blue-500 text-white'
+                    } ${isLoading && 'cursor-not-allowed opacity-75'}`}
+                >
+                    {isLoading ? 'Processing...' : isRead ? 'Mark As New' : 'Mark As Read'}
+                </button>
+                <button
+                    onClick={handleDeleteClick}
+                    disabled={isLoading}
+                    className="bg-red-500 text-white py-1 px-3 rounded-md transition-all"
+                >
+                    Delete
+                </button>
+            </div>
         </div>
     );
 });
