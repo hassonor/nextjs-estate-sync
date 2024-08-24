@@ -2,6 +2,7 @@ import mongoose, {Document} from "mongoose";
 
 
 export interface IMessage {
+    _id?: string;
     sender: mongoose.Types.ObjectId;
     recipient: mongoose.Types.ObjectId;
     property: mongoose.Types.ObjectId;
@@ -15,7 +16,7 @@ export interface IMessage {
 
 
 export interface MessageDoc extends Document, IMessage {
-    _id?: mongoose.Types.ObjectId;
+    _id?: string;
     createdAt: Date;
     updatedAt: Date;
 }
