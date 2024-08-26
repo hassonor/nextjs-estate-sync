@@ -5,6 +5,7 @@ import {ReactNode} from 'react';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AuthProvider from "@/components/AuthProvider";
+import {GlobalProvider} from "@/context/GlobalContext";
 
 export const metadata = {
     title: 'Estate Sync',
@@ -17,18 +18,21 @@ interface MainLayoutProps {
 }
 
 const MainLayout: React.FC<MainLayoutProps> = ({children}) => {
+
     return (
         <AuthProvider>
-            <html lang="en">
-            <body>
-            <main>
-                <Navbar/>
-                {children}
-            </main>
-            <Footer/>
-            <ToastContainer/>
-            </body>
-            </html>
+            <GlobalProvider>
+                <html lang="en">
+                <body>
+                <main>
+                    <Navbar/>
+                    {children}
+                </main>
+                <Footer/>
+                <ToastContainer/>
+                </body>
+                </html>
+            </GlobalProvider>
         </AuthProvider>
     );
 };

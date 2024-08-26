@@ -6,6 +6,7 @@ import markMessageAsRead from '@/app/actions/markMessageAsRead';
 
 import {IMessage} from "@/interfaces/message.interface";
 import deleteMessage from "@/app/actions/addMessage";
+import {useGlobalContext} from "@/context/GlobalContext";
 
 interface MessageCardProps {
     message: IMessage;
@@ -15,6 +16,8 @@ const MessageCard: React.FC<MessageCardProps> = React.memo(({message}) => {
     const [isRead, setIsRead] = useState<boolean>(message.read || false);
     const [isDeleted, setIsDeleted] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+
+    const {setUnreadCount} = useGlobalContext();
 
     // Memoizing the formatted date to avoid recalculating it on each render
     const formattedDate = useMemo(() => {
@@ -34,6 +37,7 @@ const MessageCard: React.FC<MessageCardProps> = React.memo(({message}) => {
         try {
             const read = await markMessageAsRead(message._id!);
             setIsRead(read);
+            setUnreadCount((prevCount) => (read ? Math.max(prevCount - 1, 0) : prevCount + 1));
             toast.success(`Marked as ${read ? 'read' : 'new'}`);
         } catch (error) {
             toast.error('An error occurred while updating the message status.');
@@ -51,6 +55,9 @@ const MessageCard: React.FC<MessageCardProps> = React.memo(({message}) => {
         try {
             await deleteMessage(message._id!);
             setIsDeleted(true);
+            if (!isRead) {
+                setUnreadCount((prevCount) => Math.max(prevCount - 1, 0));
+            }
             toast.success('Message Deleted');
         } catch (error) {
             toast.error('An error occurred while deleting the message.');
