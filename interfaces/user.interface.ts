@@ -1,10 +1,11 @@
 import mongoose, {Types} from "mongoose";
+import {IProperty} from "@/interfaces/property.interface";
 
 export interface IUser {
     email: string;
     username: string;
     image: string;
-    bookmarks?: Types.ObjectId[];
+    bookmarks?: Types.ObjectId[] | IProperty[];
 }
 
 
