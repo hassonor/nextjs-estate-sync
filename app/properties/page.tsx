@@ -4,9 +4,11 @@ import PropertyCard from "@/components/PropertyCard";
 import {IProperty} from "@/interfaces/property.interface";
 
 
-const PropertiesPage = async () => {
+const PropertiesPage = async ({searchParams: {page = 1, pageSize = 1}}) => {
     await connectDB();
-    const properties: IProperty[] = await Property.find({}).lean();
+    const skip = (page - 1) * pageSize;
+    const total = Property.countDocuments({});
+    const properties: IProperty[] = await Property.find({}).skip(skip).limit(pageSize);
 
     return (
         <section className='px-4 py-6'>
