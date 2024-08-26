@@ -50,6 +50,6 @@ MessageSchema.statics.build = function (attrs: Omit<IMessage, '_id' | 'createdAt
 };
 
 // Define the Message model with the static method
-const Message = (models.Message as MessageModel) || model<MessageDoc, MessageModel>('Message', MessageSchema);
+const Message = models.Message || model<MessageDoc, MessageModel>('Message', MessageSchema);
 
 export default Message;
