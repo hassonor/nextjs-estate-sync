@@ -59,6 +59,7 @@ const PropertyCard = ({property}: PropertyCardProps) => {
                 <div
                     className="flex justify-center gap-4 text-green-900 text-sm mb-4"
                 >
+                    <FaMoneyBill className="md:hidden lg:inline"/> Nightly
                     <p><FaMoneyBill className="md:hidden lg:inline"/> Weekly</p>
                     <p><FaMoneyBill className="md:hidden lg:inline"/> Monthly</p>
                 </div>
