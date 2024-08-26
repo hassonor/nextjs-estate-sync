@@ -1,3 +1,16 @@
+### Estate Sync using Next.js, Tailwind CSS, MongoDB, TypeScript, GCP
+
+___
+![Screenshot of the application](images/IMAGE_1.png)
+![Screenshot of the application](images/IMAGE_2.png)
+![Screenshot of the application](images/IMAGE_3.png)
+![Screenshot of the application](images/IMAGE_4.png)
+![Screenshot of the application](images/IMAGE_5.png)
+![Screenshot of the application](images/IMAGE_6.png)
+![Screenshot of the application](images/IMAGE_7.png)
+![Screenshot of the application](images/IMAGE_8.png)
+![Screenshot of the application](images/IMAGE_9.png)
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped
 with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
